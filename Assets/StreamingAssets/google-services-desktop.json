@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "734070612987",
+    "firebase_url": "https://gloriousabyss-7834a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "gloriousabyss-7834a",
+    "storage_bucket": "gloriousabyss-7834a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734070612987:android:acb2a824491576bd4d615e",
+        "android_client_info": {
+          "package_name": "com.MayAsWellGames.GloriousAbyss"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVq3EWfVIrrfmCpYu2vTOsEIZ0BXlR104"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

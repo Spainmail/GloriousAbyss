@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public enum Enum_Conditions
+{
+    HPBelow_10,
+    HPBelow_20,
+    HPBelow_30,
+    HPBelow_40,
+    HPBelow_50,
+    HPBelow_60,
+    HPBelow_70,
+    HPBelow_80,
+    HPBelow_90,
+    HPBelow_100,
+    HPAbove_90,
+    HPAbove_80,
+    HPAbove_70,
+    HPAbove_60,
+    HPAbove_50,
+    HPAbove_40,
+    HPAbove_30,
+    HPAbove_20,
+    HPAbove_10,
+    HPHighest,
+    HPLowest,
+    Nearest,
+    Farthest,
+    Unit_Caster,
+    Unit_Melee,
+    OnStandBy,
+    Engaging,
+    Dead,
+    Shielded,
+    Unshielded,
+    HigherGround
+}
