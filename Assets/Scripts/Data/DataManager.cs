@@ -122,10 +122,10 @@ public class DataManager : MonoBehaviour
 
         Model_Unit unit0 = new Model_Unit();
         unit0.behaviourCurrent.Add(tempBehaviour);
-        unit0.characters_Current = 1;
-        unit0.characters_Max = 1;
-        unit0.health_Max = 5;
-        unit0.health_Current = 5;
+        unit0.characters_Current = 5;
+        unit0.characters_Max = 5;
+        unit0.health_Max = new float[5] { 4, 4, 4, 4, 4 };
+        unit0.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit0.damage_Max = 2f;
         unit0.damage_Max = 1f;
         unit0.moveSpeed = 10f;
@@ -133,10 +133,10 @@ public class DataManager : MonoBehaviour
 
         Model_Unit unit1 = new Model_Unit();
         unit1.behaviourCurrent.Add(tempBehaviour);
-        unit1.characters_Current = 1;
-        unit1.characters_Max = 1;
-        unit1.health_Max = 5;
-        unit1.health_Current = 5;
+        unit1.characters_Current = 5;
+        unit1.characters_Max = 5;
+        unit1.health_Max = new float[5] { 4, 4, 4, 4, 4 };
+        unit1.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit1.damage_Max = 2f;
         unit1.damage_Max = 1f;
         unit1.moveSpeed = 10f;
@@ -144,10 +144,10 @@ public class DataManager : MonoBehaviour
 
         Model_Unit unit2 = new Model_Unit();
         unit2.behaviourCurrent.Add(tempBehaviour);
-        unit2.characters_Current = 1;
-        unit2.characters_Max = 1;
-        unit2.health_Max = 5;
-        unit2.health_Current = 5;
+        unit2.characters_Current = 5;
+        unit2.characters_Max = 5;
+        unit2.health_Max = new float[5] { 4, 4, 4, 4, 4 };
+        unit2.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit2.damage_Max = 2f;
         unit2.damage_Max = 1f;
         unit2.moveSpeed = 10f;

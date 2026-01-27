@@ -27,7 +27,7 @@ public class Unit_AI : MonoBehaviour
     void Update()
     {
         if (!BattleManager.instance._battleActive) return;
-        if (_unitStats.health_Current <= 0) return; //Check if unit dead.
+                                                                                                        //TO DO: Check if all characters in unit dead.
 
         if (_decisionInterval_Current > 0f)
         {
