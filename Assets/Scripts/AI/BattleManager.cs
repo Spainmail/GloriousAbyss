@@ -18,6 +18,7 @@ public class BattleManager : MonoBehaviour
     public List<Unit_AI> _enemyUnitAIs;
 
     [Header("Level Parameters")]
+    public GameObject _unitParent;
     public List<Transform> _playerSpawnpoints;
     public List<Transform> _enemySpawnpoints;
 
@@ -53,14 +54,17 @@ public class BattleManager : MonoBehaviour
 
         //Load player squad from DataManager.
         Model_Unit[] units = DataManager.instance.GetCurrentSquad();
-        for (int i = 0; i < units.Length; i++)
+        for (int i = 0; i < units.Length; i++) //Instantiate player units at spawnpoints.
         {
-
+            GameObject playerUnit = Instantiate(_playerUnitPrefab, _playerSpawnpoints[i].position, Quaternion.identity, parent: _unitParent.transform);
+            playerUnit.GetComponentInChildren<Unit_AI>().SetupComponents(false, units[i]);
+            _playerUnits.Add(playerUnit);
+            _playerUnitAIs.Add(playerUnit.GetComponentInChildren<Unit_AI>());
         }
 
-        //Set up enemy units according to spawnpoints.
+        Debug_EnemyUnitSetup(); //Set up enemy units according to spawnpoints.
 
-
+        _battleActive = true; //Start battle.                                                               TO DO: Have player press button to start.
     }
 
     public bool PopulateLevel()
@@ -93,6 +97,27 @@ public class BattleManager : MonoBehaviour
         _enemyUnitAIs.Add(_debugEnemyUnits[2].GetComponentInChildren<Unit_AI>());
 
         _battleActive = true;
+    }
+
+    public void Debug_EnemyUnitSetup()
+    {
+        _debugEnemyUnits[0].transform.position = _enemySpawnpoints[0].position;
+        _debugEnemyUnits[0].SetActive(true);
+        _enemyUnits.Add(_debugEnemyUnits[0]);
+        _enemyUnitAIs.Add(_debugEnemyUnits[0].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[0]._isEnemy = true;
+
+        _debugEnemyUnits[1].transform.position = _enemySpawnpoints[1].position;
+        _debugEnemyUnits[1].SetActive(true);
+        _enemyUnits.Add(_debugEnemyUnits[1]);
+        _enemyUnitAIs.Add(_debugEnemyUnits[1].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[1]._isEnemy = true;
+        
+        _debugEnemyUnits[2].transform.position = _enemySpawnpoints[2].position;
+        _debugEnemyUnits[2].SetActive(true);
+        _enemyUnits.Add(_debugEnemyUnits[2]);
+        _enemyUnitAIs.Add(_debugEnemyUnits[2].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[2]._isEnemy = true;
     }
 
     public void Debug_TestMovement()

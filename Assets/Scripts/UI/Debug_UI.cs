@@ -40,8 +40,33 @@ public class Debug_UI : MonoBehaviour
         BGMManager.instance.ToggleMute();
     }
 
-    public void Button_MainMenu() //Return to main menu.
+    public void Button_MainMenu() //Load main menu scene.
     {
         SceneManager.LoadScene("TitleScreen");
+    }
+
+    public void Button_InterimScene() //Load interim scene.
+    {
+        SceneManager.LoadScene("InterimScene");
+    }
+
+    public void Button_BattleScene() //Load battle scene.
+    {
+        SceneManager.LoadScene("BattleScene");
+    }
+
+    public void Button_LoadPlayerData()
+    {
+        DataManager.instance.LoadGame();
+    }
+
+    public void Button_SavePlayerData()
+    {
+        DataManager.instance.SaveGame(false);
+    }
+
+    public void Button_ResetPlayerData()
+    {
+        DataManager.instance.Debug_CreatePlayerData();
     }
 }

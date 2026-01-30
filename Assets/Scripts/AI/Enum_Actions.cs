@@ -4,11 +4,12 @@ public enum Enum_Actions
 {
     Interact,
     Bow,
+    Handgun,
     Rifle,
     Rejuvenate,
     Shield,
-    FireJavelin,
-    SludgeThrower,
+    Javelin,
+    Thrower,
     Follow,
     StandBy
 }

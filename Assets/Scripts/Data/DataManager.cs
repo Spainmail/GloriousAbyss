@@ -57,7 +57,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("Test: Save player data.")]
     public void SaveGame(bool quit)
     {
         string saveData;
@@ -100,10 +99,11 @@ public class DataManager : MonoBehaviour
 
     public Model_Unit[] GetCurrentSquad()
     {
+        if (playerData_Current == null) LoadGame();
+        
         Model_Unit[] units = new Model_Unit[playerData_Current.units.Count];
         for (int i = 0; i < units.Length; i++)
         {
-            if (Debug.isDebugBuild) Debug.Log("Unit 0 has entry " + i + "in array.");
             units[i] = playerData_Current.units[i];
         }
 
@@ -116,11 +116,12 @@ public class DataManager : MonoBehaviour
     {
         Model_PlayerData newData = new Model_PlayerData();
         Model_Behaviour tempBehaviour = new Model_Behaviour();
-        tempBehaviour.action = Enum_Actions.Bow;
+        tempBehaviour.action = Enum_Actions.Handgun;
         tempBehaviour.target = Enum_Targets.Enemy;
-        tempBehaviour.condition = Enum_Conditions.Nearest;
+        tempBehaviour.condition = Enum_Conditions.HPHighest;
 
         Model_Unit unit0 = new Model_Unit();
+        unit0.name = "Unit Alpha";
         unit0.behaviourCurrent.Add(tempBehaviour);
         unit0.characters_Current = 5;
         unit0.characters_Max = 5;
@@ -128,10 +129,11 @@ public class DataManager : MonoBehaviour
         unit0.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit0.damage_Max = 2f;
         unit0.damage_Max = 1f;
-        unit0.moveSpeed = 10f;
+        unit0.moveSpeed = 2.5f;
         unit0.range = 3f;
 
         Model_Unit unit1 = new Model_Unit();
+        unit1.name = "Unit Beta";
         unit1.behaviourCurrent.Add(tempBehaviour);
         unit1.characters_Current = 5;
         unit1.characters_Max = 5;
@@ -139,10 +141,11 @@ public class DataManager : MonoBehaviour
         unit1.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit1.damage_Max = 2f;
         unit1.damage_Max = 1f;
-        unit1.moveSpeed = 10f;
+        unit1.moveSpeed = 2.5f;
         unit1.range = 3f;
 
         Model_Unit unit2 = new Model_Unit();
+        unit2.name = "The Bird Unit";
         unit2.behaviourCurrent.Add(tempBehaviour);
         unit2.characters_Current = 5;
         unit2.characters_Max = 5;
@@ -150,7 +153,7 @@ public class DataManager : MonoBehaviour
         unit2.health_Current = new float[5] { 4, 4, 4, 4, 4 };
         unit2.damage_Max = 2f;
         unit2.damage_Max = 1f;
-        unit2.moveSpeed = 10f;
+        unit2.moveSpeed = 2.5f;
         unit2.range = 3f;
 
         newData.units.Add(unit0);
@@ -161,6 +164,12 @@ public class DataManager : MonoBehaviour
 
         playerData_Current = newData;
         playerData_Loaded = newData;
+    }
+
+    [ContextMenu("Test: Save player data.")]
+    public void Debug_SaveData()
+    {
+        SaveGame(false);
     }
 
     #endregion

@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Model_Unit
 {
+    public string name;
     public int characters_Max; //Number of characters this unit can contain at max.
     public int characters_Current; //Number of characters this unit currently consists of.
     [Space(4)]
@@ -19,4 +20,11 @@ public class Model_Unit
 
     [Header("Behaviours")]
     public List<Model_Behaviour> behaviourCurrent = new List<Model_Behaviour>();
+
+    public float GetTotalHP()
+    {
+        float tempHP = 0;
+        foreach (float hp in health_Current) tempHP += hp;
+        return tempHP;
+    }
 }
