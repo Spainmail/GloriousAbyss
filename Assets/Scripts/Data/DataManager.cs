@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
@@ -108,6 +107,17 @@ public class DataManager : MonoBehaviour
         }
 
         return units;
+    }
+
+    public void SetCurrentSquad(Model_Unit[] newSquad, bool loadBattle)
+    {
+        playerData_Current.units.Clear();
+        playerData_Current.units.AddRange(newSquad);
+
+        playerData_Loaded.units.Clear();
+        playerData_Loaded.units.AddRange(newSquad);
+
+        if (loadBattle) SceneManager.LoadScene("BattleScene");
     }
 
     #region Debug

@@ -176,6 +176,11 @@ public class Unit_Setup : MonoBehaviour
 
     #endregion
 
+    public void Button_StartBattle() //Save squad and load battle scene.
+    {
+        DataManager.instance.SetCurrentSquad(_tempSquad, true);
+    }
+
     #region Debug
 
     public void Debug_Inventory()
