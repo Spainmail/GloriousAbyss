@@ -58,9 +58,30 @@ public class Unit_AI : MonoBehaviour
         {
             if (GetValidTarget(_unitStats.behaviourCurrent[i].target, _unitStats.behaviourCurrent[i].condition) != null) //If null, check next behaviour.
             {
-                //Check range of action.
-                //If UNIT center within range, execute action (for characters who are caught up with their squad positions).
-                //If not within range, start movement towards target's nearest character.
+                Unit_AI tempTargetAI = GetValidTarget(_unitStats.behaviourCurrent[i].target, _unitStats.behaviourCurrent[i].condition); //Get valid target unit.
+                Model_Action tempAction = GameParameters.instance.GetAction(_unitStats.behaviourCurrent[i].action.ToString()); //Get action data.
+                if (ValidateRange_Unit(transform, tempTargetAI.transform, tempAction) == true) //Check range of action. If true, unit is within range.
+                {
+                    ////Start checking character range for action execution.
+                    //foreach (Character_Movement character in _characters_Current)
+                    //{
+                    //    if (ValidateRange_Character(_unitStats.behaviourCurrent[i].action, tempTargetAI) == true) //Character is within action range.
+                    //    {
+                    //        //Execute action on target.
+                    //    }
+                    //    else //Character needs to be moved towards target to enter action range.
+                    //    {
+
+                    //    }
+                    //}
+
+                    //Have unit start action execution.
+                    DetermineAction(tempAction, tempTargetAI, null);                                //TO DO: Select target character based on range calculation.
+                }
+                else //Unit needs to be moved towards target to enter action range.
+                {
+                    MoveUnitToTarget(tempTargetAI);
+                }
             }
         }
     }
@@ -301,13 +322,27 @@ public class Unit_AI : MonoBehaviour
         }
     }
 
+    private bool ValidateRange_Unit(Transform thisUnit, Transform targetUnit, Model_Action action)
+    {
+        bool tempBool = false;
+        if (Vector3.Distance(thisUnit.position, targetUnit.position) <= action.rangeUnit) tempBool = true;
+        return tempBool;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////CONTINNUE HERE
-    private bool ValidateActionRange(Enum_Actions action, Unit_AI targetUnit) //Check if target is within action range for validated behaviour.
+    private bool ValidateRange_Character(Enum_Actions action, Unit_AI targetUnit) //Check if target is within action range for validated behaviour.
     {
         //Find nearest characters between units.
         //Check distance against action range.
 
         return true;
+    }
+
+    private Character_Movement DetermineCharacterTarget()
+    {
+        
+
+        return null;
     }
 
     #endregion
@@ -316,14 +351,52 @@ public class Unit_AI : MonoBehaviour
 
     private void MoveUnitToTarget(Unit_AI targetUnit) //Called if target is outside if action range.
     {
-        //Find nearest characters between units.
-        //Set movement destination to that character's position.
-        //Start movement.
+        _movement.Move_Start(targetUnit.gameObject, 0f); //Start movement.
     }
 
     private void StopUnitMovement() //Call to stop unit when within action range (might not be necessary, depending on if we want movement + action).
     {
         //Stop movement of unit, and let characters catch up to their squad positions.
+    }
+
+    #endregion
+
+    #region Actions
+
+    public void DetermineAction(Model_Action action, Unit_AI targetAI, Character_Movement targetCharacter)
+    {
+        if (action == GameParameters.instance.Actions[0]) Action_Follow();
+        else if (action == GameParameters.instance.Actions[1]) Action_Bow();
+        else if (action == GameParameters.instance.Actions[2]) Action_Handgun();
+        else if (action == GameParameters.instance.Actions[3]) Action_Rifle();
+        else if (action == GameParameters.instance.Actions[4]) Action_Javelin();
+    }
+
+
+    private void Action_Follow()
+    {
+        //Don't do anything, just wait and see if movement needs to be updated to continue following target next interval.
+    }
+
+    private void Action_Bow()
+    {
+        //Particles, sound, prefabs, etc.
+        //Calculate damage, apply to target unit's character.
+    }
+
+    private void Action_Handgun()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void Action_Rifle()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void Action_Javelin()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Model_Action : MonoBehaviour
 {
     public string actionName;
-    public float damage;
-    public float range;
+    public float damageMin;
+    public float damageMax;
+    public float rangeUnit; //Range from within character range starts being calculated.
+    public float rangeCharacter; //Used for actually calculating unit-to-unit range.
 }

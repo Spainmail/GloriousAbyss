@@ -1,4 +1,3 @@
-using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public class GameParameters : MonoBehaviour
@@ -26,4 +25,17 @@ public class GameParameters : MonoBehaviour
     }
 
     public float GetInterval() { return _decisionInterval; }
+
+    public Model_Action GetAction(string name)
+    {
+        foreach (Model_Action action in Actions)
+        {
+            if (action.actionName == name)
+            {
+                return action;
+            }
+        }
+
+        return null;
+    }
 }

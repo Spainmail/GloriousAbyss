@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1843109030698206642}
   - component: {fileID: 7089052234598564083}
   m_Layer: 0
-  m_Name: GameParameters
+  m_Name: ---GameParameters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8509865523731585288}
+  - {fileID: 817414525606809917}
+  - {fileID: 8055308532964776275}
+  - {fileID: 6902491329806000448}
+  - {fileID: 1222889650822753889}
   m_Father: {fileID: 387001265610591390}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7089052234598564083
@@ -47,6 +52,159 @@ MonoBehaviour:
   _decisionInterval: 0.75
   _Upgrade_SquadSize: 
   _Upgrade_UnitSize: 
+  Actions:
+  - {fileID: 308176290730572105}
+  - {fileID: 7806853511987035015}
+  - {fileID: 3986041867395142368}
+  - {fileID: 6408246146370429263}
+  - {fileID: 5141801216863641708}
+--- !u!1 &2304239035319173855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 817414525606809917}
+  - component: {fileID: 7806853511987035015}
+  m_Layer: 0
+  m_Name: ----Action_Bow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &817414525606809917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304239035319173855}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1843109030698206642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7806853511987035015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304239035319173855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94d979c9a996bf49bc29b5eaff50e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Model_Action
+  actionName: Bow
+  damageMin: 1
+  damageMax: 1
+  rangeUnit: 4
+  rangeCharacter: 4
+--- !u!1 &2574700503233018386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6902491329806000448}
+  - component: {fileID: 6408246146370429263}
+  m_Layer: 0
+  m_Name: ----Action_Rifle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6902491329806000448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574700503233018386}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1843109030698206642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6408246146370429263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574700503233018386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94d979c9a996bf49bc29b5eaff50e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Model_Action
+  actionName: Rifle
+  damageMin: 3
+  damageMax: 4
+  rangeUnit: 4
+  rangeCharacter: 4
+--- !u!1 &3219123653827291010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8509865523731585288}
+  - component: {fileID: 308176290730572105}
+  m_Layer: 0
+  m_Name: ----Action_Follow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8509865523731585288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219123653827291010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1843109030698206642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &308176290730572105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219123653827291010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94d979c9a996bf49bc29b5eaff50e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Model_Action
+  actionName: Follow
+  damageMin: 0
+  damageMax: 0
+  rangeUnit: 2
+  rangeCharacter: 2
 --- !u!1 &3726224247882602359
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,9 +309,11 @@ MonoBehaviour:
   playerData_Loaded:
     units: []
     currentBattle: 0
+    _battleInProgress: 0
   playerData_Current:
     units: []
     currentBattle: 0
+    _battleInProgress: 0
   _debug: 0
   _debugMessages: 0
 --- !u!1 &5530726846263224349
@@ -285,6 +445,55 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5781790399766116543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8055308532964776275}
+  - component: {fileID: 3986041867395142368}
+  m_Layer: 0
+  m_Name: ----Action_Handgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8055308532964776275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781790399766116543}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1843109030698206642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3986041867395142368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781790399766116543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94d979c9a996bf49bc29b5eaff50e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Model_Action
+  actionName: Handgun
+  damageMin: 2
+  damageMax: 3
+  rangeUnit: 2
+  rangeCharacter: 2
 --- !u!1 &6055486758384405667
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +655,55 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &8680517557837679637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222889650822753889}
+  - component: {fileID: 5141801216863641708}
+  m_Layer: 0
+  m_Name: ----Action_Javelin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1222889650822753889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8680517557837679637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1843109030698206642}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5141801216863641708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8680517557837679637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94d979c9a996bf49bc29b5eaff50e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Model_Action
+  actionName: Javelin
+  damageMin: 1
+  damageMax: 5
+  rangeUnit: 8
+  rangeCharacter: 8
 --- !u!1 &8704310826766488438
 GameObject:
   m_ObjectHideFlags: 0
