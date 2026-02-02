@@ -85,6 +85,14 @@ public class DataManager : MonoBehaviour
         }
         else 
         {
+            bool delaySceneLoad = false;
+            Debug_CreatePlayerData();
+
+            while (delaySceneLoad == false)
+            {
+                if (playerData_Loaded != null && playerData_Current != null) delaySceneLoad = true;
+            }
+
             return false;
         }
     }

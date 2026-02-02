@@ -203,7 +203,7 @@ public class TitleMenu : MonoBehaviour
     public void Button_Setting_ResetData(GameObject obj) //Reset all saved data.
     {
         Tween_PunchButton(obj.transform);
-        //DataManager.instance.ResetPlayerData();
+        DataManager.instance.DeletePlayerData();
     }
 
     #endregion
