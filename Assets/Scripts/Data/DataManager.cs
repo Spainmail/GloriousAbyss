@@ -81,7 +81,7 @@ public class DataManager : MonoBehaviour
                 if (playerData_Loaded != null && playerData_Current != null) delaySceneLoad = true;
             }
 
-            return true;
+            return playerData_Current._battleInProgress;
         }
         else 
         {
@@ -109,13 +109,19 @@ public class DataManager : MonoBehaviour
         return units;
     }
 
-    public void SetCurrentSquad(Model_Unit[] newSquad, bool loadBattle)
+    public void SetCurrentSquad(Model_Unit[] newSquad, bool loadBattle) //When entering battle from interim scene.
     {
         playerData_Current.units.Clear();
-        playerData_Current.units.AddRange(newSquad);
+        playerData_Current.units.Add(newSquad[0]);
+        playerData_Current.units.Add(newSquad[1]);
+        playerData_Current.units.Add(newSquad[2]);
 
         playerData_Loaded.units.Clear();
-        playerData_Loaded.units.AddRange(newSquad);
+        playerData_Loaded.units.Add(newSquad[0]);
+        playerData_Loaded.units.Add(newSquad[1]);
+        playerData_Loaded.units.Add(newSquad[2]);
+
+        SaveGame(false);
 
         if (loadBattle) SceneManager.LoadScene("BattleScene");
     }
@@ -133,6 +139,9 @@ public class DataManager : MonoBehaviour
         Model_Unit unit0 = new Model_Unit();
         unit0.name = "Unit Alpha";
         unit0.behaviourCurrent.Add(tempBehaviour);
+        unit0.behaviourCurrent.Add(tempBehaviour);
+        unit0.behaviourCurrent.Add(tempBehaviour);
+        unit0.behaviourCurrent.Add(tempBehaviour);
         unit0.characters_Current = 5;
         unit0.characters_Max = 5;
         unit0.health_Max = new float[5] { 4, 4, 4, 4, 4 };
@@ -145,6 +154,9 @@ public class DataManager : MonoBehaviour
         Model_Unit unit1 = new Model_Unit();
         unit1.name = "Unit Beta";
         unit1.behaviourCurrent.Add(tempBehaviour);
+        unit1.behaviourCurrent.Add(tempBehaviour);
+        unit1.behaviourCurrent.Add(tempBehaviour);
+        unit1.behaviourCurrent.Add(tempBehaviour);
         unit1.characters_Current = 5;
         unit1.characters_Max = 5;
         unit1.health_Max = new float[5] { 4, 4, 4, 4, 4 };
@@ -156,6 +168,9 @@ public class DataManager : MonoBehaviour
 
         Model_Unit unit2 = new Model_Unit();
         unit2.name = "The Bird Unit";
+        unit2.behaviourCurrent.Add(tempBehaviour);
+        unit2.behaviourCurrent.Add(tempBehaviour);
+        unit2.behaviourCurrent.Add(tempBehaviour);
         unit2.behaviourCurrent.Add(tempBehaviour);
         unit2.characters_Current = 5;
         unit2.characters_Max = 5;

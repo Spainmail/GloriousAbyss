@@ -5895,7 +5895,12 @@ MonoBehaviour:
     damage_Min: 0
     behaviourCurrent: []
   _decisionInterval_Current: 0
-  _characters_Current: []
+  _characters_Current:
+  - {fileID: 909674507}
+  - {fileID: 1329823570}
+  - {fileID: 1805160844}
+  - {fileID: 1951938513}
+  - {fileID: 2032141412}
   _movement: {fileID: 0}
 --- !u!54 &1769374826
 Rigidbody:
@@ -7997,7 +8002,12 @@ MonoBehaviour:
     damage_Min: 0
     behaviourCurrent: []
   _decisionInterval_Current: 0
-  _characters_Current: []
+  _characters_Current:
+  - {fileID: 2096406157}
+  - {fileID: 819897288}
+  - {fileID: 1713811241}
+  - {fileID: 102558814}
+  - {fileID: 424326546}
   _movement: {fileID: 0}
 --- !u!54 &2125942869
 Rigidbody:
@@ -8168,7 +8178,12 @@ MonoBehaviour:
     damage_Min: 0
     behaviourCurrent: []
   _decisionInterval_Current: 0
-  _characters_Current: []
+  _characters_Current:
+  - {fileID: 556416808}
+  - {fileID: 242029110}
+  - {fileID: 336875455}
+  - {fileID: 375326925}
+  - {fileID: 1862802464}
   _movement: {fileID: 0}
 --- !u!54 &2129997730
 Rigidbody:

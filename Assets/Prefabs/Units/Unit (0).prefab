@@ -769,7 +769,12 @@ MonoBehaviour:
     damage_Min: 0
     behaviourCurrent: []
   _decisionInterval_Current: 0
-  _characters_Current: []
+  _characters_Current:
+  - {fileID: 323690000445166871}
+  - {fileID: 2814174484039835878}
+  - {fileID: 5138599766709559112}
+  - {fileID: 7634203509406606079}
+  - {fileID: 4035623641689511821}
   _movement: {fileID: 0}
 --- !u!114 &3990929571973462143
 MonoBehaviour:

@@ -10,6 +10,9 @@ public class GameParameters : MonoBehaviour
     [SerializeField] private int[] _Upgrade_SquadSize;
     [SerializeField] private int[] _Upgrade_UnitSize;
 
+    [Header("Action Rules")]
+    public Model_Action[] Actions; //Action list.
+
     private void Awake()
     {
         if (instance != null)
