@@ -56,12 +56,15 @@ public class Unit_AI : MonoBehaviour
         //If no other valid behaviour, put on standby for victory screens.
         for (int i = 0; i < _unitStats.behaviourCurrent.Count; i++)
         {
+            if (Debug.isDebugBuild) Debug.Log("Validating target " + _unitStats.behaviourCurrent[i].target + " and condition " + _unitStats.behaviourCurrent[i].condition);
             if (GetValidTarget(_unitStats.behaviourCurrent[i].target, _unitStats.behaviourCurrent[i].condition) != null) //If null, check next behaviour.
             {
+                if (Debug.isDebugBuild) Debug.Log("Valid target for " + _unitStats.behaviourCurrent[i].target + " under condition " + _unitStats.behaviourCurrent[i].condition);
                 Unit_AI tempTargetAI = GetValidTarget(_unitStats.behaviourCurrent[i].target, _unitStats.behaviourCurrent[i].condition); //Get valid target unit.
                 Model_Action tempAction = GameParameters.instance.GetAction(_unitStats.behaviourCurrent[i].action.ToString()); //Get action data.
                 if (ValidateRange_Unit(transform, tempTargetAI.transform, tempAction) == true) //Check range of action. If true, unit is within range.
                 {
+                    if (Debug.isDebugBuild) Debug.Log("Range validated for action " + tempAction.actionName);
                     ////Start checking character range for action execution.
                     //foreach (Character_Movement character in _characters_Current)
                     //{
@@ -72,16 +75,18 @@ public class Unit_AI : MonoBehaviour
                     //    else //Character needs to be moved towards target to enter action range.
                     //    {
 
-                    //    }
-                    //}
+                        //    }
+                        //}
 
-                    //Have unit start action execution.
+                        //Have unit start action execution.
                     DetermineAction(tempAction, tempTargetAI, null);                                //TO DO: Select target character based on range calculation.
                 }
                 else //Unit needs to be moved towards target to enter action range.
                 {
-                    MoveUnitToTarget(tempTargetAI);
+                    if (Debug.isDebugBuild && _unitStats.name == "Unit Beta") Debug.Log("Target" + tempTargetAI.GetUnitName() + "outside range for " + _unitStats.name + " (" + tempAction.actionName + ").");
+                    MoveUnitToTarget(tempTargetAI, tempAction);
                 }
+                return; //Exit after first valid behaviour is processed.
             }
         }
     }
@@ -93,8 +98,10 @@ public class Unit_AI : MonoBehaviour
         switch (targetType)
         {
             case Enum_Targets.Ally:
+                //if (Debug.isDebugBuild) Debug.Log("Getting valid ally target.");
                 return GetValidAlly(condition);
             case Enum_Targets.Enemy:
+                if (Debug.isDebugBuild && _unitStats.name == "Unit Beta") Debug.Log(_unitStats.name + " checking for nearest enemy.");
                 return GetValidEnemy(condition);
             case Enum_Targets.Self:
                 return GetValidSelf(condition);
@@ -148,6 +155,7 @@ public class Unit_AI : MonoBehaviour
                 float tempDistance_Near = 0f;
                 for (int i = 0; i < BattleManager.instance._playerUnitAIs.Count; i++)
                 {
+                    if (Debug.isDebugBuild) Debug.Log("Checking if " + BattleManager.instance._playerUnitAIs[i] + " is nearest ally.");
                     if (BattleManager.instance._playerUnitAIs[i] != this) //First make sure we are not checking ourself.
                     {
                         Transform comparePosition = _characters_Current[0].transform;
@@ -164,10 +172,19 @@ public class Unit_AI : MonoBehaviour
                         for (int k = 0; k < tempUnitChars.Length; k++) //Compare distance to first alive character of this unit.
                         {
                             //Update tempunitID and tempdistance if closer.
-                            if (Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position) < tempDistance_Near) tempUnitID_Near = i;
+                            float tempDistance = Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position);
+                            //if (Debug.isDebugBuild) Debug.Log("Comparing distance between unit characters (" + tempDistance + ").");
+                            if (tempDistance_Near == 0 || tempDistance < tempDistance_Near)
+                            {
+                                tempDistance_Near = tempDistance;
+                                tempUnitID_Near = i;
+                                //if (Debug.isDebugBuild) Debug.Log("Updated tempDistance_Near is now " + tempDistance_Near);
+                            }
+                                
                         }
                     }
                 }
+                //if (Debug.isDebugBuild) Debug.Log("Nearest ally is " + BattleManager.instance._playerUnitAIs[tempUnitID_Near] + " (" + tempDistance_Near + " away).");
                 if (tempDistance_Near == 0f) return null; //Only this unit is left alive.
                 else return BattleManager.instance._playerUnitAIs[tempUnitID_Near];
 
@@ -192,7 +209,13 @@ public class Unit_AI : MonoBehaviour
                         for (int k = 0; k < tempUnitChars.Length; k++) //Compare distance to first alive character of this unit.
                         {
                             //Update tempunitID and tempdistance if closer.
-                            if (Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position) > tempDistance_Far) tempUnitID_Far = i;
+                            float tempDistance = Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position);
+                            if (tempDistance > tempDistance_Far)
+                            {
+                                tempDistance_Far = tempDistance;
+                                tempUnitID_Far = i;
+                            }
+                                
                         }
                     }
                 }
@@ -265,10 +288,17 @@ public class Unit_AI : MonoBehaviour
                         for (int k = 0; k < tempUnitChars.Length; k++) //Compare distance to first alive character of this unit.
                         {
                             //Update tempunitID and tempdistance if closer.
-                            if (Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position) < tempDistance_Near) tempUnitID_Near = i;
+                            float tempDistance = Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position);
+                            if (tempDistance_Near == 0 || tempDistance < tempDistance_Near)
+                            {
+                                tempDistance_Near = tempDistance;
+                                tempUnitID_Near = i;
+                            }
+                                
                         }
                     }
                 }
+                //if (Debug.isDebugBuild) Debug.Log("Moving towards nearest enemy " + BattleManager.instance._enemyUnitAIs[tempUnitID_Near].GetUnitName());
                 if (tempDistance_Near == 0f) return null; //Only this unit is left alive.
                 else return BattleManager.instance._enemyUnitAIs[tempUnitID_Near];
 
@@ -293,7 +323,12 @@ public class Unit_AI : MonoBehaviour
                         for (int k = 0; k < tempUnitChars.Length; k++) //Compare distance to first alive character of this unit.
                         {
                             //Update tempunitID and tempdistance if closer.
-                            if (Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position) > tempDistance_Far) tempUnitID_Far = i;
+                            float tempDistance = Vector3.Distance(comparePosition.position, tempUnitChars[k].transform.position);
+                            if (tempDistance > tempDistance_Far)
+                            {
+                                tempDistance_Far = tempDistance;
+                                tempUnitID_Near = i;
+                            }
                         }
                     }
                 }
@@ -349,9 +384,10 @@ public class Unit_AI : MonoBehaviour
 
     #region Movement
 
-    private void MoveUnitToTarget(Unit_AI targetUnit) //Called if target is outside if action range.
+    private void MoveUnitToTarget(Unit_AI targetUnit, Model_Action action) //Called if target is outside if action range.
     {
-        _movement.Move_Start(targetUnit.gameObject, 0f); //Start movement.
+        if (Debug.isDebugBuild) Debug.Log("Moving unit within action range.");
+        _movement.Move_Start(targetUnit.gameObject, action.rangeUnit); //Start movement.
     }
 
     private void StopUnitMovement() //Call to stop unit when within action range (might not be necessary, depending on if we want movement + action).
@@ -402,6 +438,11 @@ public class Unit_AI : MonoBehaviour
     #endregion
 
     #region GetData Functions
+
+    public string GetUnitName()
+    {
+        return _unitStats.name;
+    }
 
     public List<Character_Movement> GetCharacters()
     {

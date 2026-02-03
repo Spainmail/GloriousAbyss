@@ -5884,7 +5884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit_AI
   _isEnemy: 0
   _unitStats:
-    name: 
+    name: Enemy 1
     characters_Max: 0
     characters_Current: 0
     health_Max: []
@@ -7991,7 +7991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit_AI
   _isEnemy: 0
   _unitStats:
-    name: 
+    name: Enemy 2
     characters_Max: 0
     characters_Current: 0
     health_Max: []
@@ -8167,7 +8167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Unit_AI
   _isEnemy: 0
   _unitStats:
-    name: 
+    name: Enemy 0
     characters_Max: 0
     characters_Current: 0
     health_Max: []

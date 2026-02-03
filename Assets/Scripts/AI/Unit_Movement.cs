@@ -64,6 +64,7 @@ public class Unit_Movement : MonoBehaviour
         {
             _agent.isStopped = false;
         }
+        if (Debug.isDebugBuild) Debug.Log("Moving unit " + _unitAI.GetUnitName());
         _agent.SetDestination(_target.transform.position);
         _isMoving = true;
         for (int i = 0; i < _unitCharacters.Count; i++)
