@@ -49,7 +49,7 @@ public class Unit_Movement : MonoBehaviour
         if (_agent.remainingDistance <= _desiredDistance) //(movingToDestination == true && Vector3.Distance(transform.position, currentDestination.position) <= desiredDistance)
         {
             //Debug.Log("Unit " + gameObject.transform.parent.name + " stopping at: " + Vector3.Distance(transform.position, _target.transform.position) + " while desired distance is set to: " + _desiredDistance);
-            Debug.Log("Unit " + gameObject.transform.parent.name + " stopping at: " + _agent.remainingDistance + " while desired distance is set to: " + _desiredDistance);
+            //Debug.Log("Unit " + gameObject.transform.parent.name + " stopping at: " + _agent.remainingDistance + " while desired distance is set to: " + _desiredDistance);
             _agent.isStopped = true;
             _isMoving = false;
         }
@@ -64,7 +64,7 @@ public class Unit_Movement : MonoBehaviour
         {
             _agent.isStopped = false;
         }
-        if (Debug.isDebugBuild) Debug.Log("Moving unit " + _unitAI.GetUnitName());
+        //if (Debug.isDebugBuild) Debug.Log("Moving unit " + _unitAI.GetUnitName());
         _agent.SetDestination(_target.transform.position);
         _isMoving = true;
         for (int i = 0; i < _unitCharacters.Count; i++)

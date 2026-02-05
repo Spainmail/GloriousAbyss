@@ -58,6 +58,54 @@ MonoBehaviour:
   - {fileID: 3986041867395142368}
   - {fileID: 6408246146370429263}
   - {fileID: 5141801216863641708}
+--- !u!1 &1916103264109399928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7039777295300545161}
+  - component: {fileID: 7351283041911320442}
+  m_Layer: 0
+  m_Name: ObjectPoolers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7039777295300545161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916103264109399928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7568892445401280441}
+  m_Father: {fileID: 387001265610591390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7351283041911320442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916103264109399928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc0c96e304e25449bd9241726431eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolCollector
+  _pool_ProjectileGenericBullet: {fileID: 91993987343771908}
+  _pool_ProjectileBow: {fileID: 0}
+  _pool_ProjectileJavelin: {fileID: 0}
 --- !u!1 &2304239035319173855
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,8 +153,9 @@ MonoBehaviour:
   actionName: Bow
   damageMin: 1
   damageMax: 1
-  rangeUnit: 9
-  rangeCharacter: 9
+  rangeUnit: 10
+  rangeCharacter: 10
+  delay: 2
 --- !u!1 &2574700503233018386
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,8 +203,9 @@ MonoBehaviour:
   actionName: Rifle
   damageMin: 3
   damageMax: 4
-  rangeUnit: 9
-  rangeCharacter: 9
+  rangeUnit: 10
+  rangeCharacter: 10
+  delay: 2
 --- !u!1 &3219123653827291010
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,8 +253,9 @@ MonoBehaviour:
   actionName: Follow
   damageMin: 0
   damageMax: 0
-  rangeUnit: 3.5
-  rangeCharacter: 3.5
+  rangeUnit: 4
+  rangeCharacter: 4
+  delay: 0
 --- !u!1 &3726224247882602359
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,8 +543,9 @@ MonoBehaviour:
   actionName: Handgun
   damageMin: 2
   damageMax: 3
-  rangeUnit: 6
-  rangeCharacter: 6
+  rangeUnit: 7
+  rangeCharacter: 7
+  delay: 1
 --- !u!1 &6055486758384405667
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,8 +754,9 @@ MonoBehaviour:
   actionName: Javelin
   damageMin: 1
   damageMax: 5
-  rangeUnit: 14
-  rangeCharacter: 14
+  rangeUnit: 15
+  rangeCharacter: 15
+  delay: 3
 --- !u!1 &8704310826766488438
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +790,7 @@ Transform:
   - {fileID: 3112963715784958662}
   - {fileID: 8277433371436052533}
   - {fileID: 1843109030698206642}
+  - {fileID: 7039777295300545161}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7156351531209556914
@@ -751,3 +805,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955a498b4c390cd4a969e9e76688a5c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoNotDestroy
+--- !u!1 &8711884963983285148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7568892445401280441}
+  - component: {fileID: 91993987343771908}
+  m_Layer: 0
+  m_Name: Projectile_Generic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7568892445401280441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711884963983285148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7039777295300545161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &91993987343771908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711884963983285148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a5716a805902043b4cd55b2a160ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPooler
+  _prefabToPool: {fileID: 3999555541170566365, guid: e32a7668cae7fe04fa3025cbd8ac7c2c, type: 3}
+  _maxObjects: 100
