@@ -28,6 +28,9 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> _debugEnemyUnits;
     public List<Transform> _debugPlayerSpawns;
     public List<Transform> _debugEnemySpawns;
+    public Model_Unit _debugUnit0;
+    public Model_Unit _debugUnit1;
+    public Model_Unit _debugUnit2;
 
     private void Awake()
     {
@@ -105,19 +108,19 @@ public class BattleManager : MonoBehaviour
         _debugEnemyUnits[0].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[0]);
         _enemyUnitAIs.Add(_debugEnemyUnits[0].GetComponentInChildren<Unit_AI>());
-        _enemyUnitAIs[0]._isEnemy = true;
+        _enemyUnitAIs[0].SetupComponents(true, _debugUnit0);
 
         _debugEnemyUnits[1].transform.position = _enemySpawnpoints[1].position;
         _debugEnemyUnits[1].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[1]);
         _enemyUnitAIs.Add(_debugEnemyUnits[1].GetComponentInChildren<Unit_AI>());
-        _enemyUnitAIs[1]._isEnemy = true;
-        
+        _enemyUnitAIs[1].SetupComponents(true, _debugUnit1);
+
         _debugEnemyUnits[2].transform.position = _enemySpawnpoints[2].position;
         _debugEnemyUnits[2].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[2]);
         _enemyUnitAIs.Add(_debugEnemyUnits[2].GetComponentInChildren<Unit_AI>());
-        _enemyUnitAIs[2]._isEnemy = true;
+        _enemyUnitAIs[2].SetupComponents(true, _debugUnit2);
     }
 
     public void Debug_TestMovement()

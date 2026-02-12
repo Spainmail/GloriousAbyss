@@ -8,6 +8,9 @@ public class Character_Movement : MonoBehaviour
     public Transform _targetPosition;
     public bool _moveEnabled;
 
+    [Header("Death")]
+    public bool isDead;
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -20,6 +23,8 @@ public class Character_Movement : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) return;
+
         UpdateMovement();
     }
 
@@ -35,5 +40,14 @@ public class Character_Movement : MonoBehaviour
             Debug.Log(gameObject.name + " has arrived.");
             _moveEnabled = false;
         }
+    }
+
+    public void KillCharacter()
+    {
+        if (_moveEnabled) _moveEnabled = false;
+        if (_agent.isActiveAndEnabled) _agent.isStopped = true;
+        _agent.enabled = false;
+
+        gameObject.SetActive(false);
     }
 }

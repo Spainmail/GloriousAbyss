@@ -153,8 +153,8 @@ MonoBehaviour:
   actionName: Bow
   damageMin: 1
   damageMax: 1
-  rangeUnit: 10
-  rangeCharacter: 10
+  rangeUnit: 12
+  rangeCharacter: 12
   delay: 2
 --- !u!1 &2574700503233018386
 GameObject:
@@ -203,8 +203,8 @@ MonoBehaviour:
   actionName: Rifle
   damageMin: 3
   damageMax: 4
-  rangeUnit: 10
-  rangeCharacter: 10
+  rangeUnit: 12
+  rangeCharacter: 12
   delay: 2
 --- !u!1 &3219123653827291010
 GameObject:
@@ -543,8 +543,8 @@ MonoBehaviour:
   actionName: Handgun
   damageMin: 2
   damageMax: 3
-  rangeUnit: 7
-  rangeCharacter: 7
+  rangeUnit: 9
+  rangeCharacter: 9
   delay: 1
 --- !u!1 &6055486758384405667
 GameObject:
@@ -754,8 +754,8 @@ MonoBehaviour:
   actionName: Javelin
   damageMin: 1
   damageMax: 5
-  rangeUnit: 15
-  rangeCharacter: 15
+  rangeUnit: 17
+  rangeCharacter: 17
   delay: 3
 --- !u!1 &8704310826766488438
 GameObject:

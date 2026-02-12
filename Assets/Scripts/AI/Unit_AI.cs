@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 
 public class Unit_AI : MonoBehaviour
 {
     [Header("Unit Parameters")]
     [SerializeField] public bool _isEnemy;
+    public bool _isDead;
     [SerializeField] private Model_Unit _unitStats;                                                 //This reference is set on unit instantiation.
     [SerializeField] private float _decisionInterval_Current;
     [SerializeField] private List<Character_Movement> _characterMovers;
@@ -17,9 +19,10 @@ public class Unit_AI : MonoBehaviour
 
     [Header("Unit Components")]
     [SerializeField] private Unit_Movement _movement;
+    private Hitbox _hitbox;
 
     void Start()
-    {   
+    {
         //SetupComponents();
     }
 
@@ -27,15 +30,23 @@ public class Unit_AI : MonoBehaviour
     {
         _movement = GetComponent<Unit_Movement>();
         _movement._unitAI = this;
-        _unitStats = unit;
-        transform.parent.name = unit.name;
-        _isEnemy = isEnemy;
+        if (unit != null)
+        {
+            _unitStats = unit;
+        }
         _movement._moveSpeed = _unitStats.moveSpeed;
+        _isEnemy = isEnemy;
+        transform.parent.name = _unitStats.name;
+
+        _hitbox = GetComponentInChildren<Hitbox>();
+        _hitbox._parentAI = this;
+
+        foreach (Character_Action action in _characterActions) action._parentAI = this;
     }
 
     void Update()
     {
-        if (!BattleManager.instance._battleActive || _validating == true) return;
+        if (!BattleManager.instance._battleActive || _validating == true || _isDead) return;
                                                                                                         //TO DO: Check if all characters in unit dead.
 
         if (_decisionInterval_Current > 0f)
@@ -161,7 +172,7 @@ public class Unit_AI : MonoBehaviour
                 for (int i = 0; i < ValidateAllyList().Count; i++)
                 {
                     if (Debug.isDebugBuild && _unitStats.name == "Unit Beta") Debug.Log("Checking if " + ValidateAllyList()[i] + " is nearest ally.");
-                    if (ValidateAllyList()[i] != this) //First make sure we are not checking ourself.
+                    if (ValidateAllyList()[i] != this && !ValidateEnemyList()[i]._isDead) //First make sure we are not checking ourself.
                     {
                         Transform comparePosition = _characterMovers[0].transform;
                         for (int j = 0; j < _unitStats.health_Current.Length; j++) //Find first alive character of this unit.
@@ -198,7 +209,7 @@ public class Unit_AI : MonoBehaviour
                 float tempDistance_Far = 0f;
                 for (int i = 0; i < ValidateAllyList().Count; i++)
                 {
-                    if (ValidateAllyList()[i] != this) //First make sure we are not checking ourself.
+                    if (ValidateAllyList()[i] != this && !ValidateEnemyList()[i]._isDead) //First make sure we are not checking ourself.
                     {
                         Transform comparePosition = _characterMovers[0].transform;
                         for (int j = 0; j < _unitStats.health_Current.Length; j++) //Find first alive character of this unit.
@@ -277,7 +288,7 @@ public class Unit_AI : MonoBehaviour
                 float tempDistance_Near = 0f;
                 for (int i = 0; i < ValidateEnemyList().Count; i++)
                 {
-                    if (ValidateEnemyList()[i] != this) //First make sure we are not checking ourself.
+                    if (ValidateEnemyList()[i] != this && !ValidateEnemyList()[i]._isDead) //First make sure we are not checking ourself.
                     {
                         Transform comparePosition = _characterMovers[0].transform;
                         for (int j = 0; j < _unitStats.health_Current.Length; j++) //Find first alive character of this unit.
@@ -312,7 +323,7 @@ public class Unit_AI : MonoBehaviour
                 float tempDistance_Far = 0f;
                 for (int i = 0; i < ValidateEnemyList().Count; i++)
                 {
-                    if (ValidateEnemyList()[i] != this) //First make sure we are not checking ourself.
+                    if (ValidateEnemyList()[i] != this && !ValidateEnemyList()[i]._isDead) //First make sure we are not checking ourself.
                     {
                         Transform comparePosition = _characterMovers[0].transform;
                         for (int j = 0; j < _unitStats.health_Current.Length; j++) //Find first alive character of this unit.
@@ -441,6 +452,35 @@ public class Unit_AI : MonoBehaviour
     private void Action_Javelin()
     {
         throw new NotImplementedException();
+    }
+
+    #endregion
+
+    #region Unit Effects
+
+    public void DamageRandomCharacter(float damage)
+    {
+        Debug.Log("Damaging unit " + GetUnitName());
+        bool characterDamaged = false;
+        while (characterDamaged == false)
+        {
+            if (_unitStats.health_Current[0] <= 0 && _unitStats.health_Current[1] <= 0 && _unitStats.health_Current[2] <= 0 && 
+                _unitStats.health_Current[3] <= 0 && _unitStats.health_Current[4] <= 0)
+            {
+                _hitbox.gameObject.SetActive(false);
+                characterDamaged = true;
+                _isDead = true;
+                return;
+            }
+
+            int tempInt = UnityEngine.Random.Range(0, 5);
+            if (_unitStats.health_Current[tempInt] > 0)
+            {
+                _unitStats.health_Current[tempInt] -= damage;
+                if (_unitStats.health_Current[tempInt] <= 0) _characterMovers[tempInt].KillCharacter();
+                characterDamaged = true;
+            }
+        }
     }
 
     #endregion

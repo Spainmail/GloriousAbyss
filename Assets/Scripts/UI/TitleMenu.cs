@@ -28,6 +28,14 @@ public class TitleMenu : MonoBehaviour
     public Transform[] _settingButton_AnchorsShown;
     public float _settingButtons_TweenDuration;
 
+    [Header("Credits")]
+    public CanvasGroup _canvasGroup_Credits;
+    public GameObject _creditsButton_Return;
+    public CanvasGroup _canvasGroup_CreditsButton;
+    public Transform _creditsButton_AnchorHidden;
+    public Transform _creditsButton_AnchorShown;
+    public float _creditsButtons_TweenDuration;
+
     [Header("Scene Management")]
     public string _scene_Battle0;
     public string _scene_Interim0;
@@ -190,6 +198,39 @@ public class TitleMenu : MonoBehaviour
         DataManager.instance.SaveGame(true);
     }
 
+    public void Button_Credits()
+    {
+        StartCoroutine(Toggle_CreditsPane());
+    }
+
+    public IEnumerator Toggle_CreditsPane()
+    {
+        if (_canvasGroup_Credits.alpha == 0f) //Player requesting to show credits menu.
+        {
+            StartCoroutine(Toggle_MainMenu()); //Hide main menu.
+            yield return new WaitForSeconds(_creditsButtons_TweenDuration);
+
+            _canvasGroup_Credits.DOFade(1f, 0f);
+
+            _canvasGroup_CreditsButton.DOFade(1f, 0.1f);
+            _canvasGroup_CreditsButton.transform.DOMove(_creditsButton_AnchorShown.position, _settingButtons_TweenDuration).SetEase(Ease.OutBack);
+
+            yield return new WaitForSeconds((_creditsButtons_TweenDuration) + 0.1f);
+            _canvasGroup_Credits.interactable = true;
+        }
+        else //Player requesting to hide settings menu.
+        {
+            _canvasGroup_Credits.interactable = false;
+
+            _canvasGroup_CreditsButton.DOFade(0f, 0.25f);
+            _canvasGroup_CreditsButton.transform.DOMove(_creditsButton_AnchorHidden.position, _settingButtons_TweenDuration).SetEase(Ease.OutBack);
+
+            yield return new WaitForSeconds(_creditsButtons_TweenDuration);
+            _canvasGroup_Credits.DOFade(0f, 0f);
+
+            StartCoroutine(Toggle_MainMenu());
+        }
+    }
     #endregion
 
     #region Settings Menu

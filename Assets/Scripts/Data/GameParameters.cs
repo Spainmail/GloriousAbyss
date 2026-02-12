@@ -26,6 +26,24 @@ public class GameParameters : MonoBehaviour
 
     public float GetInterval() { return _decisionInterval; }
 
+    public float GetDamageMin(string name)
+    {
+        foreach (Model_Action action in Actions)
+        {
+            if (action.actionName == name) return action.damageMin;
+        }
+        return 0f;
+    }
+
+    public float GetDamageMax(string name)
+    {
+        foreach (Model_Action action in Actions)
+        {
+            if (action.actionName == name) return action.damageMax;
+        }
+        return 0f;
+    }
+
     public Model_Action GetAction(string name)
     {
         foreach (Model_Action action in Actions)

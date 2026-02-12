@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.4019, y: 1.26, z: 5.613}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.08}
+  m_LocalScale: {x: 0.161523, y: 0.161523, z: 0.430728}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -236,13 +236,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86693c86ebf35584e8baf472ae8bae8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  bulletVelocity: 400
-  shootableLayerMask:
+  damage: 0
+  _bulletVelocity: 30
+  _hitPlayer: 0
+  _enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 129
-  defaultImpactVFXPrefab: {fileID: 0}
-  stopExecuting: 0
-  bulletTimer: 5
+    m_Bits: 256
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _defaultImpactVFXPrefab: {fileID: 0}
+  _stopExecuting: 0
+  _bulletTimer: 3
+  _debugMessages: 1
+  _debugDamage: 1
 --- !u!54 &3126335246354262999
 Rigidbody:
   m_ObjectHideFlags: 0
