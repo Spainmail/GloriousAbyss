@@ -67,6 +67,6 @@ public class Debug_UI : MonoBehaviour
 
     public void Button_ResetPlayerData()
     {
-        DataManager.instance.Debug_CreatePlayerData();
+        DataManager.instance.Squad_CreateDefault();
     }
 }

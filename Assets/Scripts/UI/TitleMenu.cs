@@ -119,10 +119,12 @@ public class TitleMenu : MonoBehaviour
 
             yield return new WaitForSeconds((_mainButtons.Count * _mainButtons_TweenDuration) + 0.1f);
             _canvasGroup_Main.interactable = true;
+            _canvasGroup_Main.blocksRaycasts = true;
         }
         else //Player requesting to hide main menu.
         {
             _canvasGroup_Main.interactable = false;
+            _canvasGroup_Main.blocksRaycasts = false;
 
             for (int i = 0; i < _mainButtons.Count; i++)
             {
@@ -144,6 +146,7 @@ public class TitleMenu : MonoBehaviour
         }
 
         bool gameInProgress = false;
+        Debug.Log("Got here before freezing!");
         gameInProgress = DataManager.instance.LoadGame();
         if (gameInProgress == true)
         {
@@ -177,10 +180,12 @@ public class TitleMenu : MonoBehaviour
 
             yield return new WaitForSeconds((_settingButtons.Count * _settingButtons_TweenDuration) + 0.1f);
             _canvasGroup_Setting.interactable = true;
+            _canvasGroup_Setting.blocksRaycasts = true;
         }
         else //Player requesting to hide settings menu.
         {
             _canvasGroup_Setting.interactable = false;
+            _canvasGroup_Setting.blocksRaycasts = false;
 
             for (int i = 0; i < _settingButtons.Count; i++)
             {
@@ -217,10 +222,12 @@ public class TitleMenu : MonoBehaviour
 
             yield return new WaitForSeconds((_creditsButtons_TweenDuration) + 0.1f);
             _canvasGroup_Credits.interactable = true;
+            _canvasGroup_Credits.blocksRaycasts = true;
         }
         else //Player requesting to hide settings menu.
         {
             _canvasGroup_Credits.interactable = false;
+            _canvasGroup_Credits.blocksRaycasts = false;
 
             _canvasGroup_CreditsButton.DOFade(0f, 0.25f);
             _canvasGroup_CreditsButton.transform.DOMove(_creditsButton_AnchorHidden.position, _settingButtons_TweenDuration).SetEase(Ease.OutBack);

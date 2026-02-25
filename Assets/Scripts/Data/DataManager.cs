@@ -86,7 +86,7 @@ public class DataManager : MonoBehaviour
         else 
         {
             bool delaySceneLoad = false;
-            Debug_CreatePlayerData();
+            Squad_CreateDefault();
 
             while (delaySceneLoad == false)
             {
@@ -134,22 +134,26 @@ public class DataManager : MonoBehaviour
         if (loadBattle) SceneManager.LoadScene("BattleScene");
     }
 
-    #region Debug
     [ContextMenu("Test: Create player data.")]
-    public void Debug_CreatePlayerData()
+    public void Squad_CreateDefault() //If player squad data does not exist, create default setup.
     {
         Model_PlayerData newData = new Model_PlayerData();
-        Model_Behaviour tempBehaviour = new Model_Behaviour();
-        tempBehaviour.action = Enum_Actions.Handgun;
+        Model_Behaviour tempBehaviour = new Model_Behaviour(); //Default behaviour 0.
+        tempBehaviour.action = Enum_Actions.Bow;
         tempBehaviour.target = Enum_Targets.Enemy;
-        tempBehaviour.condition = Enum_Conditions.HPHighest;
+        tempBehaviour.condition = Enum_Conditions.Nearest;
+
+        Model_Behaviour tempBehaviour2 = new Model_Behaviour(); //Default behaviour 1.
+        tempBehaviour2.action = Enum_Actions.Follow;
+        tempBehaviour2.target = Enum_Targets.Ally;
+        tempBehaviour2.condition = Enum_Conditions.Nearest;
 
         Model_Unit unit0 = new Model_Unit();
         unit0.name = "Unit Alpha";
         unit0.behaviourCurrent.Add(tempBehaviour);
-        unit0.behaviourCurrent.Add(tempBehaviour);
-        unit0.behaviourCurrent.Add(tempBehaviour);
-        unit0.behaviourCurrent.Add(tempBehaviour);
+        unit0.behaviourCurrent.Add(tempBehaviour2);
+        unit0.behaviourCurrent.Add(tempBehaviour2);
+        unit0.behaviourCurrent.Add(tempBehaviour2);
         unit0.characters_Current = 5;
         unit0.characters_Max = 5;
         unit0.health_Max = new float[5] { 4, 4, 4, 4, 4 };
@@ -162,9 +166,9 @@ public class DataManager : MonoBehaviour
         Model_Unit unit1 = new Model_Unit();
         unit1.name = "Unit Beta";
         unit1.behaviourCurrent.Add(tempBehaviour);
-        unit1.behaviourCurrent.Add(tempBehaviour);
-        unit1.behaviourCurrent.Add(tempBehaviour);
-        unit1.behaviourCurrent.Add(tempBehaviour);
+        unit1.behaviourCurrent.Add(tempBehaviour2);
+        unit1.behaviourCurrent.Add(tempBehaviour2);
+        unit1.behaviourCurrent.Add(tempBehaviour2);
         unit1.characters_Current = 5;
         unit1.characters_Max = 5;
         unit1.health_Max = new float[5] { 4, 4, 4, 4, 4 };
@@ -177,9 +181,9 @@ public class DataManager : MonoBehaviour
         Model_Unit unit2 = new Model_Unit();
         unit2.name = "The Bird Unit";
         unit2.behaviourCurrent.Add(tempBehaviour);
-        unit2.behaviourCurrent.Add(tempBehaviour);
-        unit2.behaviourCurrent.Add(tempBehaviour);
-        unit2.behaviourCurrent.Add(tempBehaviour);
+        unit2.behaviourCurrent.Add(tempBehaviour2);
+        unit2.behaviourCurrent.Add(tempBehaviour2);
+        unit2.behaviourCurrent.Add(tempBehaviour2);
         unit2.characters_Current = 5;
         unit2.characters_Max = 5;
         unit2.health_Max = new float[5] { 4, 4, 4, 4, 4 };
@@ -198,6 +202,8 @@ public class DataManager : MonoBehaviour
         playerData_Current = newData;
         playerData_Loaded = newData;
     }
+
+    #region Debug
 
     [ContextMenu("Test: Save player data.")]
     public void Debug_SaveData()

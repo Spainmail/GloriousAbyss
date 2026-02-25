@@ -46,17 +46,47 @@ public class Unit_AI : MonoBehaviour
 
     void Update()
     {
-        if (!BattleManager.instance._battleActive || _validating == true || _isDead) return;
-                                                                                                        //TO DO: Check if all characters in unit dead.
+        bool tempBool = ValidateHealth();
+        if (Debug.isDebugBuild) Debug.Log(GetUnitName() + " is alive.");
+        if (tempBool == true && !_isDead) //Check if all characters in unit dead.
+        {
+            Debug.Log("Reporting dead.");
+            //if (Debug.isDebugBuild) Debug.Log("Reporting " + GetUnitName() + " as dead to battleManager.");
+            BattleManager.instance.RelayDeath(_isEnemy); //Relay to battlemanager.
+            _isDead = true;
+            return;
+        }
+        
+        if (!BattleManager.instance._battleActive || _validating == true || _isDead) return; //Avoid running behaviour/movement if unit is dead.
 
         if (_decisionInterval_Current > 0f)
         {
             _decisionInterval_Current -= Time.deltaTime;
         }
-        else //Time to make a decision.                                                                 //TO DO: Check if any characters in unit alive.
+        else //Time to make a decision.
         {
             _validating = true;
             ValidateBehaviour();
+        }
+    }
+
+    private bool ValidateHealth() //Check if any characters in unit left alive.
+    {
+        int tempInt = 0;
+        for (int i = 0; i < _unitStats.health_Current.Length; i++)
+        {
+            if (_unitStats.health_Current[i] > 0f) tempInt += 1;
+        }
+
+        if (tempInt > 0f) 
+        {
+            if (Debug.isDebugBuild) Debug.Log("Units alive in " + GetUnitName() + ": " + tempInt);
+            return false;
+        }
+        else
+        {
+            if (Debug.isDebugBuild) Debug.Log("Unit " + GetUnitName() + " is dead.");
+            return true;
         }
     }
 
@@ -418,10 +448,10 @@ public class Unit_AI : MonoBehaviour
     public void ExecuteAction(Model_Action action, Unit_AI targetAI, Character_Movement targetCharacter)
     {
         if (action == GameParameters.instance.Actions[0]) Action_Follow();
-        else if (action == GameParameters.instance.Actions[1]) Action_Bow();
+        else if (action == GameParameters.instance.Actions[1]) Action_Bow(action, targetAI, null);
         else if (action == GameParameters.instance.Actions[2]) Action_Handgun(action, targetAI, null);
-        else if (action == GameParameters.instance.Actions[3]) Action_Rifle();
-        else if (action == GameParameters.instance.Actions[4]) Action_Javelin();
+        else if (action == GameParameters.instance.Actions[3]) Action_Rifle(action, targetAI, null);
+        else if (action == GameParameters.instance.Actions[4]) Action_Javelin(action, targetAI, null);
     }
 
 
@@ -430,28 +460,44 @@ public class Unit_AI : MonoBehaviour
         //Don't do anything, just wait and see if movement needs to be updated to continue following target next interval.
     }
 
-    private void Action_Bow()
+    private void Action_Bow(Model_Action action, Unit_AI targetUnit, Character_Movement targetCharacter)
     {
         //Particles, sound, prefabs, etc.
         //Calculate damage, apply to target unit's character.
+        for (int i = 0; i < _characterActions.Count; i++)
+        {
+            if (_unitStats.health_Current[i] > 0) _characterActions[i].Action_Bow(targetUnit);
+        }
     }
 
     private void Action_Handgun(Model_Action action, Unit_AI targetUnit, Character_Movement targetCharacter)
     {
+        //Particles, sound, prefabs, etc.
+        //Calculate damage, apply to target unit's character.
         for (int i = 0; i < _characterActions.Count; i++)
         {
             if (_unitStats.health_Current[i] > 0) _characterActions[i].Action_Handgun(targetUnit);
         }
     }
 
-    private void Action_Rifle()
+    private void Action_Rifle(Model_Action action, Unit_AI targetUnit, Character_Movement targetCharacter)
     {
-        throw new NotImplementedException();
+        //Particles, sound, prefabs, etc.
+        //Calculate damage, apply to target unit's character.
+        for (int i = 0; i < _characterActions.Count; i++)
+        {
+            if (_unitStats.health_Current[i] > 0) _characterActions[i].Action_Rifle(targetUnit);
+        }
     }
 
-    private void Action_Javelin()
+    private void Action_Javelin(Model_Action action, Unit_AI targetUnit, Character_Movement targetCharacter)
     {
-        throw new NotImplementedException();
+        //Particles, sound, prefabs, etc.
+        //Calculate damage, apply to target unit's character.
+        for (int i = 0; i < _characterActions.Count; i++)
+        {
+            if (_unitStats.health_Current[i] > 0) _characterActions[i].Action_Javelin(targetUnit);
+        }
     }
 
     #endregion
@@ -469,13 +515,13 @@ public class Unit_AI : MonoBehaviour
             {
                 _hitbox.gameObject.SetActive(false);
                 characterDamaged = true;
-                _isDead = true;
                 return;
             }
 
             int tempInt = UnityEngine.Random.Range(0, 5);
             if (_unitStats.health_Current[tempInt] > 0)
             {
+                _characterActions[tempInt]._healthBarUI.DecreaseHealth(damage, _unitStats.health_Current[tempInt], _unitStats.health_Max[tempInt]);
                 _unitStats.health_Current[tempInt] -= damage;
                 if (_unitStats.health_Current[tempInt] <= 0) _characterMovers[tempInt].KillCharacter();
                 characterDamaged = true;

@@ -57,6 +57,8 @@ public class Unit_Movement : MonoBehaviour
 
     public void Move_Start(GameObject destination, float distance)
     {
+        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
+
         _desiredDistance = distance;
         _target = destination;
         //Debug.Log("Target is " + Vector3.Distance(transform.position, _target.transform.position));

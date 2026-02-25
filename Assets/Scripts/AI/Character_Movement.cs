@@ -7,6 +7,7 @@ public class Character_Movement : MonoBehaviour
     private NavMeshAgent _agent;
     public Transform _targetPosition;
     public bool _moveEnabled;
+    public Animator _animator;
 
     [Header("Death")]
     public bool isDead;
@@ -14,6 +15,7 @@ public class Character_Movement : MonoBehaviour
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void ToggleMovement()
@@ -33,10 +35,16 @@ public class Character_Movement : MonoBehaviour
         if (_moveEnabled == true)
         {
             _agent.SetDestination(_targetPosition.transform.position);
+            if (_animator != null) _animator.SetFloat("Speed", 1f);
+        }
+        else
+        {
+            if (_animator != null) _animator.SetFloat("Speed", 0f);
         }
 
-        if (_moveEnabled  && transform.position == _targetPosition.position && !_agent.pathPending) //&& _agent.hasPath != true
-        {
+        //if (_moveEnabled && transform.position == _targetPosition.position && !_agent.pathPending) //&& _agent.hasPath != true
+        if (_moveEnabled &&_agent.hasPath != true && !_agent.pathPending) //&& _agent.hasPath != true
+            {
             Debug.Log(gameObject.name + " has arrived.");
             _moveEnabled = false;
         }

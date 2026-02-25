@@ -1,12 +1,18 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
     [Space(6)]
     public bool _battleActive;
+    [Space(6)]
+    public PreBattleUI _UI_PreBattle;
+    public BattleUI _UI_Battle;
 
     [Header("Battle Participants")]
     public GameObject _playerUnitPrefab;
@@ -16,6 +22,8 @@ public class BattleManager : MonoBehaviour
     public List<Unit_AI> _playerUnitAIs;
     public List<GameObject> _enemyUnits;
     public List<Unit_AI> _enemyUnitAIs;
+    public int _enemyUnitsAliveCurrent;
+    public int _playerUnitsAliveCurrent;
 
     [Header("Level Parameters")]
     public GameObject _unitParent;
@@ -31,6 +39,7 @@ public class BattleManager : MonoBehaviour
     public Model_Unit _debugUnit0;
     public Model_Unit _debugUnit1;
     public Model_Unit _debugUnit2;
+    public Model_Unit[] _debugUnits;
 
     private void Awake()
     {
@@ -57,15 +66,59 @@ public class BattleManager : MonoBehaviour
 
         //Load player squad from DataManager.
         Model_Unit[] units = DataManager.instance.GetCurrentSquad();
-        for (int i = 0; i < units.Length; i++) //Instantiate player units at spawnpoints.
+        if (Debug.isDebugBuild) Debug.Log("Player units this battle: " + units.Length);
+        _playerUnitsAliveCurrent = units.Length;
+        if (Debug.isDebugBuild) Debug.Log("Enemy units this battle: " + _debugUnits.Length);
+        _enemyUnitsAliveCurrent = _debugUnits.Length;
+
+        List<Transform> tempSpawns = new List<Transform>(); //Find spawn points for all units.
+        for (int i = 0; i < units.Length; i++)
         {
-            GameObject playerUnit = Instantiate(_playerUnitPrefab, _playerSpawnpoints[i].position, Quaternion.identity, parent: _unitParent.transform);
+            float tempInt = units[i].health_Max[0];
+            units[i].health_Current[0] = tempInt;
+            units[i].health_Current[1] = tempInt;
+            units[i].health_Current[2] = tempInt;
+            units[i].health_Current[3] = tempInt;
+            units[i].health_Current[4] = tempInt;
+
+            bool foundSpawnpoint = false;
+            Transform tempTransform = _playerSpawnpoints[0];
+            while (foundSpawnpoint == false)
+            {
+                tempTransform = _playerSpawnpoints[UnityEngine.Random.Range(0, _playerSpawnpoints.Count)]; //Get randomized spawnpoint.
+                if (!tempSpawns.Contains(tempTransform)) foundSpawnpoint = true;
+            }
+            tempSpawns.Add(tempTransform); //Set to randomized result.
+        }
+
+        for (int i = 0; i < units.Length; i++) //Instantiate player units according to spawnpoint list.
+        {
+            GameObject playerUnit = Instantiate(_playerUnitPrefab, tempSpawns[i].position, Quaternion.identity, parent: _unitParent.transform);
             playerUnit.GetComponentInChildren<Unit_AI>().SetupComponents(false, units[i]);
             _playerUnits.Add(playerUnit);
             _playerUnitAIs.Add(playerUnit.GetComponentInChildren<Unit_AI>());
         }
 
-        Debug_EnemyUnitSetup(); //Set up enemy units according to spawnpoints.
+        tempSpawns.Clear(); //Clear player spawns.
+        for (int i = 0; i < _debugUnits.Length; i++) //Randomize enemy unit spawnpoints.
+        {
+            bool foundSpawnpoint = false;
+            Transform tempTransform = _enemySpawnpoints[0];
+            while (foundSpawnpoint == false)
+            {
+                tempTransform = _enemySpawnpoints[UnityEngine.Random.Range(0, _enemySpawnpoints.Count)]; //Get randomized spawnpoint.
+                if (!tempSpawns.Contains(tempTransform)) foundSpawnpoint = true;
+            }
+            tempSpawns.Add(tempTransform); //Set to randomized result.
+        }
+
+        for (int i = 0; i < units.Length; i++) //Instantiate enemy units according to spawnpoint list.
+        {
+            GameObject enemyUnit = Instantiate(_enemyUnitPrefab, tempSpawns[i].position, Quaternion.identity, parent: _unitParent.transform);
+            enemyUnit.GetComponentInChildren<Unit_AI>().SetupComponents(true, _debugUnits[i]);
+            _enemyUnits.Add(enemyUnit);
+            _enemyUnitAIs.Add(enemyUnit.GetComponentInChildren<Unit_AI>());
+        }
 
         _battleActive = true; //Start battle.                                                               TO DO: Have player press button to start.
     }
@@ -74,6 +127,37 @@ public class BattleManager : MonoBehaviour
     {
         return true;
     }
+
+    #region Game State
+
+    public void RelayDeath(bool enemy) //Update unit counters and check if level is complete (game over / victory).
+    {
+        if (!enemy)
+        {
+            _playerUnitsAliveCurrent -= 1;
+            if (_playerUnitsAliveCurrent <= 0) TriggerGameOver(); //Game Over.
+
+        }
+        else
+        {
+            _enemyUnitsAliveCurrent -= 1;
+            if (_enemyUnitsAliveCurrent <= 0) TriggerVictory(); //Victory.
+        }
+    }
+
+    private void TriggerVictory() //Show victory screen on battle UI canvas, stop player units from taking new actions.
+    {
+        _battleActive = false;
+        _UI_Battle.Victory();
+    }
+
+    private void TriggerGameOver() //Show game over screen on battle UI canvas, stop enemy units from taking new actions.
+    {
+        _battleActive = false;
+        _UI_Battle.GameOver();
+    }
+
+    #endregion
 
     #region Debug
 
@@ -92,12 +176,15 @@ public class BattleManager : MonoBehaviour
         _debugEnemyUnits[0].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[0]);
         _enemyUnitAIs.Add(_debugEnemyUnits[0].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[0]._isEnemy = true;
         _debugEnemyUnits[1].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[1]);
         _enemyUnitAIs.Add(_debugEnemyUnits[1].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[1]._isEnemy = true;
         _debugEnemyUnits[2].SetActive(true);
         _enemyUnits.Add(_debugEnemyUnits[2]);
         _enemyUnitAIs.Add(_debugEnemyUnits[2].GetComponentInChildren<Unit_AI>());
+        _enemyUnitAIs[2]._isEnemy = true;
 
         _battleActive = true;
     }
