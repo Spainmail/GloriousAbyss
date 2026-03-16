@@ -34,12 +34,17 @@ public class Unit_Setup : MonoBehaviour
     public List<Enum_Conditions> _inventoryConditions;
     public List<Enum_Actions> _inventoryActions;
 
+    [Header("Audio")]
+    public AudioClip _clipButton;
+    private AudioSource _source;
+
     [Header("Debug")]
     public bool _debugInventory;
 
     private void Start()
     {
         _tempSquad = DataManager.instance.GetCurrentSquad();
+        _source = GetComponent<AudioSource>();
         PopulateInventory();
     }
 
@@ -187,6 +192,12 @@ public class Unit_Setup : MonoBehaviour
     }
 
     #region UI Elements
+
+    public void PlayButtonSound()
+    {
+        _source.clip = _clipButton;
+        _source.Play();
+    }
 
     public void ShowProperties_Action(int whichAction) //Show action properties in inventory "modal" section.
     {

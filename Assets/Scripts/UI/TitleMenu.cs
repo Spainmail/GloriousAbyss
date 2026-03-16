@@ -40,6 +40,10 @@ public class TitleMenu : MonoBehaviour
     public string _scene_Battle0;
     public string _scene_Interim0;
 
+    [Header("Audio")]
+    public AudioClip _clipButton;
+    private AudioSource _source;
+
     [Header("Debugging")]
     [SerializeField] private bool _debugBattle;
     [SerializeField] private bool _debugMessages;
@@ -50,6 +54,7 @@ public class TitleMenu : MonoBehaviour
         if (Debug.isDebugBuild && _debugBGM) BGMManager.instance.ToggleMute(); //Mute immediately if debugging.
         BGMManager.instance.StartNewTrack(0f, 0.5f, 1);
         //Load player settings.
+        _source = GetComponent<AudioSource>();
         SetUpUI(); //Disable and reset all UI.
     }
 
@@ -102,6 +107,8 @@ public class TitleMenu : MonoBehaviour
 
     public IEnumerator Toggle_MainMenu()
     {
+        PlayButtonSound();
+
         if (_canvasGroup_Main.alpha == 0f) //Player requesting to show main menu.
         {
             if (_canvasGroup_Setting.alpha == 1f) //Settings menu needs to be disabled first.
@@ -115,7 +122,7 @@ public class TitleMenu : MonoBehaviour
             {
                 _canvasGroups_MainButtons[i].DOFade(1f, 0.1f);
                 _mainButtons[i].transform.DOMove(_mainButton_AnchorsShown[i].position, _mainButtons_TweenDuration).SetEase(Ease.OutBack).SetDelay(i * 0.1f);
-            }   
+            }
 
             yield return new WaitForSeconds((_mainButtons.Count * _mainButtons_TweenDuration) + 0.1f);
             _canvasGroup_Main.interactable = true;
@@ -137,6 +144,12 @@ public class TitleMenu : MonoBehaviour
         }
     }
 
+    private void PlayButtonSound()
+    {
+        _source.clip = _clipButton;
+        _source.Play();
+    }
+
     public void Button_StartGame()
     {
         if (_debugBattle)
@@ -144,6 +157,8 @@ public class TitleMenu : MonoBehaviour
             SceneManager.LoadScene(_scene_Battle0);
             return;
         }
+
+        PlayButtonSound();
 
         bool gameInProgress = false;
         Debug.Log("Got here before freezing!");
@@ -166,6 +181,8 @@ public class TitleMenu : MonoBehaviour
 
     public IEnumerator Toggle_SettingsPane()
     {
+        PlayButtonSound();
+
         if (_canvasGroup_Setting.alpha == 0f) //Player requesting to show settings menu.
         {
             StartCoroutine(Toggle_MainMenu()); //Hide main menu.
@@ -210,6 +227,8 @@ public class TitleMenu : MonoBehaviour
 
     public IEnumerator Toggle_CreditsPane()
     {
+        PlayButtonSound();
+
         if (_canvasGroup_Credits.alpha == 0f) //Player requesting to show credits menu.
         {
             StartCoroutine(Toggle_MainMenu()); //Hide main menu.
@@ -244,12 +263,16 @@ public class TitleMenu : MonoBehaviour
 
     public void Button_Setting_Return(GameObject obj) //Return to main menu from settings.
     {
+        PlayButtonSound();
+
         Tween_PunchButton(obj.transform);
         StartCoroutine(Toggle_MainMenu());
     }
 
     public void Button_Setting_ResetData(GameObject obj) //Reset all saved data.
     {
+        PlayButtonSound();
+
         Tween_PunchButton(obj.transform);
         DataManager.instance.DeletePlayerData();
     }

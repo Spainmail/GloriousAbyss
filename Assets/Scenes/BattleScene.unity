@@ -10974,7 +10974,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f648b34cb808ac44aa5801b0040cb5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraControls
-  _panMultiplier: 0.5
+  _panMultiplier: 0.25
+  _previousPos: {x: 0, y: 0, z: 0}
   _camera: {fileID: 0}
   _zoomMin: 10
   _zoomMax: 68
